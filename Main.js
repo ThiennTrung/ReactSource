@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert,Button } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -12,17 +12,17 @@ const LoginScreen = () => {
 
     useEffect(() => {
         loadInfo();
-        AutoLogin();
     }, []);
 
-    const AutoLogin = () => {
-        if (username && password){
-            GetTonken();
-
-            if (token){
-                get_day_status(token);
-            }
-        }
+    const Login = () =>{
+      if (username && password)
+      {
+        GetTonken();
+      }
+      if (token)
+      {
+        get_day_status();
+      }
     }
 
     const handleCheckin = async () => {
@@ -145,7 +145,7 @@ const LoginScreen = () => {
         }
     };
 
-    const get_day_status = async(tonken) => {
+    const get_day_status = async() => {
         try {
               const response = await fetch('https://ddc.fis.vn/fis0/api/get_day_status', {
                 method: 'GET',
@@ -197,16 +197,18 @@ const LoginScreen = () => {
       />
 
       <View style = {{flexDirection :'row'}}>
-        <TouchableOpacity style={styles.button} onPress={SaveAccount}>
+      <TouchableOpacity style={styles.button} onPress={SaveAccount}>
         <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity style={styles.button} onPress={Login}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleCheckin}>
-        <Text style={styles.buttonText}>Checkin</Text>
+        <Text style={styles.buttonText}>IN</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleCheckout}>
-        <Text style={styles.buttonText}>Checkout</Text>
+        <Text style={styles.buttonText}>OUT</Text>
       </TouchableOpacity>
 
         </View>
